@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class BackendResolutionService {
     private final ApiCacheService apiCacheService;
     private final ConfigServiceClient configServiceClient;
-    private String resolve(String apiKey){
+    public String resolve(String apiKey){
         String cached = apiCacheService.getBackendUrl(apiKey);
         if(cached!=null){
             log.debug("Cache hit fr api key: {}",apiKey);
