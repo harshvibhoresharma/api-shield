@@ -9,15 +9,16 @@ import org.springframework.web.client.RestClient;
 @Slf4j
 public class BackendHealthClient {
     private final RestClient restClient;
-    public boolean pingHealthEndpoint(String backendUrl){
-        try{
+    public boolean pingHealthEndpoint(String backendUrl) {
+        try {
             restClient.get()
-                    .uri(backendUrl+"/actuator/health")
+                    .uri(backendUrl + "/")
                     .retrieve()
+                    .onStatus(status -> false, (req, res) -> {}) // never throw on any status
                     .toBodilessEntity();
             return true;
-        }catch (Exception e){
-            log.warn("Failed ping health for {}: {}",backendUrl,e.getMessage());
+        } catch (Exception e) {
+            log.warn("Failed ping health for {}: {}", backendUrl, e.getMessage());
             return false;
         }
     }
